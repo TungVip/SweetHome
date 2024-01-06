@@ -1,0 +1,49 @@
+.login {
+    display: flex;
+    min-height: 100vh;
+    max-height: 100%;
+    flex-direction: column;
+    
+}
+
+.login-header {
+    display: flex;
+    margin: 0 20vw;
+    border-bottom: 1px solid black;
+    align-items: center;
+}
+
+.login-header p {
+    display: flex;
+    flex-grow: 1; 
+    justify-content: flex-end; 
+    font-size: 1.2em
+}
+
+.login-body {
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 10px 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.login-body p {
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.register-content p {
+    font-weight: normal;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.login-callback {
+    cursor: pointer;
+    color:#7f187f;
+    text-decoration:underline
+}
+

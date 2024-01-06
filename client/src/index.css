@@ -6,6 +6,7 @@ body {
   font-family: "Alegreya", serif;
   overflow-y: hidden;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 a {
   text-decoration: none;
