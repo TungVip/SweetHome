@@ -23,7 +23,7 @@
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid black;
-  padding-left: 5%;
+  padding: 10px 0 10px 5%
 }
 
 .sideBar-item {
@@ -46,7 +46,7 @@
   flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
-  padding-left: 5%;
+  padding: 10px 0 10px 5% ;
   cursor: pointer;
 }
 

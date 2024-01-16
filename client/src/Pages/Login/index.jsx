@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useNavigate } from 'react-router-dom';
 
 const LoginContent = ({ handleEmailSubmit, handleEmailChange, haveEmail, email }) => {
   return (
@@ -74,12 +75,12 @@ const RegisterContent = ({ handlePasswordSubmit, handlePasswordChange, haveEmail
   )
 }
 
-const Login = () => {
-  const [account, setAccount] = useState([]);
+const Login = (props) => {
+  const {haveAccount, setHaveAccount, account, setAccount} = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [haveEmail, setHaveEmail] = useState(false);
-  const [haveAccount, setHaveAccount] = useState(false);
+  const navigate = useNavigate()
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -92,20 +93,15 @@ const Login = () => {
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     setHaveEmail(true);
-    console.log('Submitted email:', email);
   };
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitted password:', password);
     const newAccount = { email: email, password: password };
     setAccount([...account, newAccount]);
     setHaveAccount(true);
+    navigate('/')
   };
-
-  useEffect(() => {
-    console.log("Account", account);
-  }, [account])
 
   return (
     <div className="login">

@@ -8,7 +8,8 @@
 
 .login-header {
     display: flex;
-    margin: 0 20vw;
+    margin: 30px 20vw;
+    padding-bottom: 10px;
     border-bottom: 1px solid black;
     align-items: center;
 }

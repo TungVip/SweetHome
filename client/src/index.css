@@ -4,10 +4,16 @@ body {
   place-items: center;
   flex-direction: row;
   font-family: "Alegreya", serif;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   overflow-x: hidden;
   box-sizing: border-box;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
 a {
   text-decoration: none;
 }

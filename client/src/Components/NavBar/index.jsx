@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ['Furniture', 'Outdoor', 'Bedding & Bath', 'Rugs', 'Décor & Pillows', 'Organization', 'Lighting', 'Kitchen', 'Baby & Kids', 'Home Improvement', 'Appliances', 'Pet', 'Holiday', 'Shop by Room', 'Sale'];
+const pages = [{linkURL: "./Furniture", pageName:'Furniture'}, {linkURL: "/Outdoor", pageName: 'Outdoor'}, {linkURL: "/BeddingBath", pageName: 'Bedding & Bath'}, {linkURL: "/Sale", pageName: 'Sale'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -94,7 +94,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white" }}>
+    <AppBar position="static" sx={{ backgroundColor: "white", height: "64px"}}>
   <Container maxWidth="xl">
     <Toolbar disableGutters>
       <Box
@@ -135,9 +135,9 @@ function ResponsiveAppBar() {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          {pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">{page}</Typography>
+          {pages.map((page, id) => (
+            <MenuItem key={id} onClick={handleCloseNavMenu}>
+              <Link to={page.linkURL}>{page.pageName}</Link>
             </MenuItem>
           ))}
         </Menu>
@@ -149,17 +149,18 @@ function ResponsiveAppBar() {
           display: { xs: 'none', md: 'flex' },
           flexWrap: 'wrap', // Allow items to wrap onto the next line
           justifyContent: 'center', 
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
-        {pages.map((page) => (
-          <Button
-            key={page}
-            onClick={handleCloseNavMenu}
-            sx={{ color: 'black', display: 'block', marginTop: 0, mb: 0 }}
+        {pages.map((page, id) => (
+          <Link 
+            to={page.linkURL}
+            key={id}
+            style={{ margin: '0 4vw', fontSize: '1.2em'}}
+            
           >
-            {page}
-          </Button>
+            {page.pageName}
+          </Link>
         ))}
       </Box>
     </Toolbar>
@@ -169,7 +170,7 @@ function ResponsiveAppBar() {
   );
 }
 
-function AccountMenu() {
+function AccountMenu({haveAccount, setHaveAccount}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -190,7 +191,8 @@ function AccountMenu() {
             aria-expanded={open ? 'true' : undefined}
           >
             <AccountCircle sx={{color: "white", mr: "10px"}}/>
-            <p style={{color:"white"}}>Sign in</p>
+            <p style={{color:"white", display: haveAccount ? "none" : "block"}}>Sign in</p>
+            <p style={{color:"white", display: haveAccount ? "block" : "none"}}>Acount</p>
           </IconButton>
       </Box>
       <Menu
@@ -230,14 +232,15 @@ function AccountMenu() {
         anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
       >
         <Link to="/Login">
-        <MenuItem sx={{display: "flex", ml: "10px", mr: "10px", justifyContent:"center", color: "white", backgroundColor: "rgb(127, 24, 127)", "&:hover": {backgroundColor: "#a05ea6"}, borderRadius: "20px"}}>
-          Sign in
-        </MenuItem>
+          <MenuItem sx={{display: haveAccount ? "none" : "flex", ml: "10px", mr: "10px", justifyContent:"center", color: "white", backgroundColor: "rgb(127, 24, 127)", "&:hover": {backgroundColor: "#a05ea6"}, borderRadius: "20px"}}>
+            Sign in
+          </MenuItem>
         </Link>
         
-        <Link to="/" >
-        <p style={{textAlign: "center", textDecoration:"underline", fontSize: "1.2em"}}>Create account</p>
+        <Link to="/">
+          <p style={{display: haveAccount ? "none" : "block", textAlign: "center", textDecoration:"underline", fontSize: "1.2em"}}>Create account</p>
         </Link>
+        <h2 style={{display: haveAccount ? "block" : "none", margin: "10px 0 10px 20px"}}>Welcome</h2>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
@@ -264,16 +267,23 @@ function AccountMenu() {
           </ListItemIcon>
           My Giftcard
         </MenuItem>
+        <div style={{display: haveAccount ? "block" : "none"}}>
+          <Divider/>
+          <h2 style={{margin: "10px 0 10px 20px", cursor:"pointer"}} onClick={() => (setHaveAccount(false))}>Log out</h2>
+        </div>
+        
       </Menu>
     </div>
   );
 }
 
-export default function PrimarySearchAppBar() {
+export default function NavBar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [isCartSidebarVisible, setCartSidebarVisible] = useState(false);
+  const {haveAccount, setHaveAccount} = props;
+ 
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -339,9 +349,9 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <div style={{display: "flex", flexDirection:"column"}}>
-      <Box sx={{flexGrow: 1 }}>
-        <AppBar position="static">
+    <div id="myNavbar" style={{display: "flex", flexDirection:"column"}}>
+      <Box sx={{flexGrow: 1}}>
+        <AppBar position="sticky" sx={{backgroundColor:"purple"}}>
           <Toolbar sx={{ml: "5vw", mr: "5vw"}}>
             <IconButton
               size="large"
@@ -355,14 +365,17 @@ export default function PrimarySearchAppBar() {
               
             </IconButton>
             {isSidebarVisible && <Sidebar onClose={toggleSidebar} />}
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              Sweethome
-            </Typography>
+            <Link to="/">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}
+              >
+                Sweethome
+              </Typography>
+            </Link>
+            
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -374,7 +387,7 @@ export default function PrimarySearchAppBar() {
             </Search>
             <Box sx={{ flexGrow: 0.95 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <AccountMenu/>
+              <AccountMenu haveAccount={haveAccount} setHaveAccount={setHaveAccount}/>
               
 
               <IconButton

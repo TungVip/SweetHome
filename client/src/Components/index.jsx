@@ -3,3 +3,7 @@ export { default as Sidebar } from "./SideBar";
 export { default as CartSideBar } from "./CartSideBar";
 export { default as Logo } from "./Logo";
 export { default as Footer } from "./Footer";
+export { default as SaleOff } from "./SaleOff";
+export { default as BigFooter } from "./BigFooter";
+export { default as ItemList } from "./ItemList";
+export { default as Carousel } from "./Carousel";
